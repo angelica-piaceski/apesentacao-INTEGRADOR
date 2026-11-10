@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Site educacional sobre radiação solar e aquecimento de piscina — Projeto Integrador CEP." />
+  <title>Sol & Água — Radiação Solar e Aquecimento de Piscina</title>
 
+  <!-- Fonte para dislexia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Pular para o conteúdo principal (acessibilidade) -->
+  <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- Barra de Acessibilidade -->
+  <div class="a11y-bar" role="toolbar" aria-label="Ferramentas de acessibilidade">
+    <button id="btn-font-minus" aria-label="Diminuir fonte" title="Diminuir fonte">A-</button>
+    <button id="btn-font-plus" aria-label="Aumentar fonte" title="Aumentar fonte">A+</button>
+    <button id="btn-contrast" aria-label="Alternar alto contraste" title="Alto contraste">🌓 Contraste</button>
+    <button id="btn-dyslexia" aria-label="Ativar fonte para dislexia" title="Fonte para dislexia">🔤 Dislexia</button>
+    <button id="btn-reading-guide" aria-label="Régua de leitura" title="Régua de leitura">📏 Régua</button>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="header" role="banner">
+    <div class="logo">
+      <span class="sun" aria-hidden="true">☀️</span>
+      <span class="water" aria-hidden="true">💧</span>
+      <h1>Sol & Água</h1>
+    </div>
+    <p class="tagline">Radiação solar e o aquecimento da piscina</p>
+  </header>
+
+  <!-- Navegação -->
+  <nav class="nav" role="navigation" aria-label="Menu principal">
+    <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰ Menu</button>
+    <ul class="nav-list">
+      <li><a href="#home" class="nav-link active" data-page="home">🏠 Início</a></li>
+      <li><a href="#radiacao" class="nav-link" data-page="radiacao">🌞 Radiação Solar</a></li>
+      <li><a href="#espectro" class="nav-link" data-page="espectro">🌈 Tipos de Radiação</a></li>
+      <li><a href="#simulador" class="nav-link" data-page="simulador">🧪 Simulador</a></li>
+      <li><a href="#robotica" class="nav-link" data-page="robotica">🤖 Robótica</a></li>
+      <li><a href="#acessibilidade" class="nav-link" data-page="acessibilidade">♿ Acessibilidade</a></li>
+      <li><a href="#mapa" class="nav-link" data-page="mapa">🗺️ Mapa do Site</a></li>
+    </ul>
+  </nav>
+
+  <!-- Conteúdo principal -->
+  <main id="main" role="main">
+
+    <!-- HOME -->
+    <section id="home" class="page active" aria-labelledby="home-title">
+      <h2 id="home-title">Bem-vindo ao Sol & Água</h2>
+      <div class="hero">
+        <div class="hero-text">
+          <p class="lead">Descubra como a <strong>radiação eletromagnética do Sol</strong> viaja 150 milhões de quilômetros para aquecer a água da sua piscina — e como podemos usar <strong>tecnologia, robótica e ciência</strong> para tornar esse processo mais eficiente, sustentável e acessível a todos.</p>
+          <div class="cta-group">
+            <a href="#radiacao" class="btn btn-primary">Começar a aprender</a>
+            <a href="#simulador" class="btn btn-secondary">Ir ao simulador</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="sun-anim"></div>
+          <div class="pool-anim"></div>
+        </div>
+      </div>
+
+      <h3>Questões orientadoras</h3>
+      <ul class="questions">
+        <li>🌍 Como a radiação solar chega à Terra?</li>
+        <li>🌈 Quais as diferenças entre radiação UV, visível e infravermelha?</li>
+        <li>💧 Como a energia é transferida para a água?</li>
+      </ul>
+    </section>
+
+    <!-- RADIAÇÃO SOLAR -->
+    <section id="radiacao" class="page" aria-labelledby="rad-title">
+      <h2 id="rad-title">🌞 A Radiação Solar</h2>
+
+      <article>
+        <h3>1. O que é radiação eletromagnética?</h3>
+        <p>A radiação eletromagnética é uma forma de <strong>energia que se propaga no vácuo</strong> na forma de ondas compostas por campos elétricos e magnéticos oscilantes. Ela não precisa de um meio material para viajar — por isso, a luz do Sol consegue atravessar o vácuo do espaço até chegar à Terra.</p>
+        <p>Toda radiação eletromagnética viaja à <strong>velocidade da luz</strong>: <code>c ≈ 3 × 10⁸ m/s</code>.</p>
+
+        <div class="formula-box">
+          <p><strong>Equação fundamental:</strong></p>
+          <p class="formula">c = λ · f</p>
+          <p>Onde: <code>c</code> = velocidade da luz, <code>λ</code> = comprimento de onda, <code>f</code> = frequência.</p>
+        </div>
+      </article>
+
+      <article>
+        <h3>2. Como a radiação solar chega à Terra?</h3>
+        <p>O Sol é uma estrela de superfície a cerca de <strong>5.778 K</strong> (~5.500 °C). Ele emite energia em todo o espectro eletromagnético, mas a maior parte está concentrada na luz visível e no infravermelho próximo.</p>
+        <p>A energia leva aproximadamente <strong>8 minutos e 20 segundos</strong> para percorrer os 150 milhões de km entre o Sol e a Terra. Ao chegar à atmosfera, parte é refletida, parte é absorvida pelos gases (como o ozônio, que bloqueia UV-C) e o restante atinge a superfície.</p>
+
+        <div class="info-card">
+          <h4>☀️ Constante Solar</h4>
+          <p>A quantidade de energia que atinge o topo da atmosfera é de aproximadamente <strong>1.361 W/m²</strong>. Na superfície, em um dia claro ao meio-dia, chegam cerca de <strong>1.000 W/m²</strong>.</p>
+        </div>
+      </article>
+
+      <article>
+        <h3>3. Como a energia aquece a água da piscina?</h3>
+        <p>Quando a radiação atinge a superfície da água, três processos físicos acontecem:</p>
+        <ol>
+          <li><strong>Reflexão:</strong> parte da luz é refletida (a água brilha!).</li>
+          <li><strong>Absorção:</strong> a água absorve principalmente a radiação infravermelha e parte da visível, convertendo-a em energia térmica.</li>
+          <li><strong>Transmissão:</strong> comprimentos de onda menores (azul/violeta) penetram mais fundo na água.</li>
+        </ol>
+        <p>A energia absorvida aumenta a agitação das moléculas de água — e é isso que chamamos de <strong>aumento de temperatura</strong>.</p>
+
+        <div class="formula-box">
+          <p><strong>Lei de Stefan-Boltzmann</strong> (energia emitida por um corpo negro):</p>
+          <p class="formula">P = σ · A · T⁴</p>
+          <p>Onde: <code>σ = 5,67 × 10⁻⁸ W/(m²·K⁴)</code>, <code>A</code> = área, <code>T</code> = temperatura em Kelvin.</p>
+        </div>
+
+        <div class="formula-box">
+          <p><strong>Equação do calor sensível:</strong></p>
+          <p class="formula">Q = m · c · ΔT</p>
+          <p>Onde: <code>m</code> = massa da água, <code>c = 4,186 J/(g·°C)</code> (calor específico da água), <code>ΔT</code> = variação de temperatura.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ESPECTRO -->
+    <section id="espectro" class="page" aria-labelledby="esp-title">
+      <h2 id="esp-title">🌈 Tipos de Radiação</h2>
+      <p>O espectro eletromagnético é contínuo, mas dividimos a radiação solar em três faixas principais que chegam à superfície:</p>
+
+      <div class="spectrum-visual" aria-hidden="true">
+        <div class="band uv">UV</div>
+        <div class="band vis">Visível</div>
+        <div class="band ir">IV</div>
+      </div>
+
+      <div class="cards-grid">
+        <article class="card card-uv">
+          <h3>☢️ Ultravioleta (UV)</h3>
+          <p><strong>Comprimento de onda:</strong> 100 – 400 nm</p>
+          <p><strong>Energia:</strong> alta (a mais energética que chega à superfície)</p>
+          <p><strong>Efeitos:</strong> causa bronzeamento, queimaduras, danos ao DNA e degrada materiais. É parcialmente bloqueada pela camada de ozônio.</p>
+          <p><strong>Na piscina:</strong> contribui pouco para o aquecimento, mas é a principal responsável pelo desbotamento de cores e degradação de equipamentos.</p>
+        </article>
+
+        <article class="card card-vis">
+          <h3>🌈 Visível</h3>
+          <p><strong>Comprimento de onda:</strong> 400 – 700 nm</p>
+          <p><strong>Energia:</strong> média</p>
+          <p><strong>Efeitos:</strong> é a faixa que nossos olhos enxergam. Vai do violeta (400 nm) ao vermelho (700 nm).</p>
+          <p><strong>Na piscina:</strong> penetra na água, sendo absorvida gradualmente. O azul penetra mais fundo — por isso piscinas parecem azuis!</p>
+        </article>
+
+        <article class="card card-ir">
+          <h3>🔥 Infravermelho (IV)</h3>
+          <p><strong>Comprimento de onda:</strong> 700 nm – 1 mm</p>
+          <p><strong>Energia:</strong> baixa (por fóton), mas em grande quantidade</p>
+          <p><strong>Efeitos:</strong> sentimos como calor. É a principal responsável pelo aquecimento direto.</p>
+          <p><strong>Na piscina:</strong> é absorvida nas primeiras camadas da água, aquecendo-a rapidamente. Representa cerca de <strong>49%</strong> da energia solar que chega à superfície.</p>
+        </article>
+      </div>
+
+      <div class="info-card">
+        <h4>📊 Distribuição aproximada da energia solar na superfície</h4>
+        <ul>
+          <li>Ultravioleta: ~4%</li>
+          <li>Visível: ~47%</li>
+          <li>Infravermelho: ~49%</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SIMULADOR -->
+    <section id="simulador" class="page" aria-labelledby="sim-title">
+      <h2 id="sim-title">🧪 Simulador: Aquecendo a Piscina</h2>
+      <p>Ajuste os parâmetros e veja como a temperatura da piscina muda ao longo do tempo com base na radiação solar recebida!</p>
+
+      <div class="simulator">
+        <div class="sim-controls">
+          <label>
+            ☀️ Intensidade solar: <span id="lbl-intensidade">1000</span> W/m²
+            <input type="range" id="intensidade" min="0" max="1361" value="1000" />
+          </label>
+          <label>
+            📐 Ângulo de incidência: <span id="lbl-angulo">90</span>°
+            <input type="range" id="angulo" min="0" max="90" value="90" />
+          </label>
+          <label>
+            💧 Volume da piscina: <span id="lbl-volume">20</span> m³
+            <input type="range" id="volume" min="5" max="100" value="20" />
+          </label>
+          <label>
+            🌡️ Temperatura inicial: <span id="lbl-temp">20</span> °C
+            <input type="range" id="temp-inicial" min="10" max="35" value="20" />
+          </label>
+          <label>
+            🪟 Área da piscina: <span id="lbl-area">20</span> m²
+            <input type="range" id="area" min="5" max="80" value="20" />
+          </label>
+          <div class="sim-buttons">
+            <button id="btn-play" class="btn btn-primary">▶ Iniciar</button>
+            <button id="btn-pause" class="btn btn-secondary">⏸ Pausar</button>
+            <button id="btn-reset" class="btn btn-secondary">🔄 Reiniciar</button>
+          </div>
+        </div>
+
+        <div class="sim-canvas-wrap">
+          <canvas id="sim-canvas" width="600" height="350" aria-label="Simulação visual da piscina aquecendo"></canvas>
+          <div class="sim-readout" aria-live="polite">
+            <p>🌡️ Temperatura atual: <strong id="out-temp">20.0</strong> °C</p>
+            <p>⏱️ Tempo: <strong id="out-tempo">0</strong> min</p>
+            <p>⚡ Potência absorvida: <strong id="out-pot">0</strong> W</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h4>🧠 Como o simulador funciona?</h4>
+        <p>A potência efetiva absorvida é calculada por: <code>P = I · A · cos(θ) · α</code>, onde <code>α ≈ 0,7</code> é a absorvividade da água. A cada passo, a temperatura sobe segundo <code>ΔT = (P · Δt) / (m · c)</code>, considerando também perdas por convecção e evaporação.</p>
+      </div>
+    </section>
+
+    <!-- ROBÓTICA -->
+    <section id="robotica" class="page" aria-labelledby="rob-title">
+      <h2 id="rob-title">🤖 Robótica e Automação</h2>
+
+      <article>
+        <h3>Sistema automatizado de controle de temperatura</h3>
+        <p>Propomos um sistema inteligente que combina <strong>sensores, atuadores e microcontrolador</strong> para otimizar o aquecimento da piscina usando energia solar, reduzindo desperdício e consumo elétrico.</p>
+
+        <h4>🔧 Componentes</h4>
+        <ul>
+          <li><strong>Sensor de temperatura (DS18B20):</strong> mede a temperatura da água em tempo real.</li>
+          <li><strong>Sensor de luminosidade (LDR):</strong> detecta a intensidade da luz solar.</li>
+          <li><strong>Sensor de nível ultrassônico (HC-SR04):</strong> controla o nível da água.</li>
+          <li><strong>Microcontrolador (Arduino/ESP32):</strong> processa os dados e toma decisões.</li>
+          <li><strong>Bomba de circulação:</strong> movimenta a água para aquecimento uniforme.</li>
+          <li><strong>Cobertura automática (motor + lona térmica):</strong> reduz perdas de calor à noite.</li>
+          <li><strong>Aquecedor auxiliar:</strong> acionado apenas quando necessário.</li>
+        </ul>
+
+        <h4>⚙️ Lógica de automação</h4>
+        <div class="code-block">
+<pre>SE luminosidade > 500 lux E temp_alvo > temp_atual ENTÃO
+    ligar_bomba()
+    abrir_cobertura()
+SENÃO SE temp_atual >= temp_alvo ENTÃO
+    desligar_bomba()
+    fechar_cobertura()   // reduz perdas noturnas
+SENÃO SE (noite OU nublado) E temp_atual < (temp_alvo - 2) ENTÃO
+    ligar_aquecedor_auxiliar()
+FIM</pre>
+        </div>
+
+        <h4>🌱 Impacto sustentável</h4>
+        <p>Estima-se que uma cobertura térmica automática reduza as perdas de calor em até <strong>70%</strong>, economizando energia e água (menos evaporação). O sistema pode ser alimentado por <strong>painéis fotovoltaicos</strong>, tornando a operação 100% renovável.</p>
+      </article>
+
+      <article>
+        <h3>💡 Prototipagem sugerida (para feira de ciências)</h3>
+        <p>Uma maquete em escala com:</p>
+        <ul>
+          <li>Recipiente pequeno representando a piscina;</li>
+          <li>Lâmpada incandesca como "Sol";</li>
+          <li>Arduino + sensor de temperatura DS18B20;</li>
+          <li>Mini motor controlando uma "cobertura" de papel alumínio;</li>
+          <li>Display LCD mostrando a temperatura em tempo real.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ACESSIBILIDADE -->
+    <section id="acessibilidade" class="page" aria-labelledby="ace-title">
+      <h2 id="ace-title">♿ Acessibilidade e Inclusão</h2>
+      <p>Este site foi projetado para ser acessível a todos. Conheça os recursos disponíveis:</p>
+
+      <ul class="features-list">
+        <li>✅ <strong>VLibras</strong> integrado: tradução automática de textos para Libras.</li>
+        <li>✅ <strong>Vídeos em Libras</strong> explicando os conceitos principais.</li>
+        <li>✅ <strong>Navegação completa por teclado</strong> (Tab, Enter, Esc).</li>
+        <li>✅ <strong>Alto contraste</strong> para pessoas com baixa visão.</li>
+        <li>✅ <strong>Fonte para dislexia</strong> (Atkinson Hyperlegible).</li>
+        <li>✅ <strong>Ajuste de tamanho de fonte</strong> (A+ / A-).</li>
+        <li>✅ <strong>Régua de leitura</strong> para facilitar o acompanhamento.</li>
+        <li>✅ <strong>Skip link</strong> para pular direto ao conteúdo.</li>
+        <li>✅ <strong>Textos alternativos</strong> em todas as imagens e elementos visuais.</li>
+        <li>✅ <strong>ARIA labels</strong> em todos os controles interativos.</li>
+      </ul>
+
+      <h3>🎬 Vídeos em Libras</h3>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: O que é radiação solar">
+            <span>🤟 Vídeo 1</span>
+            <p>O que é radiação solar?</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: Tipos de radiação">
+            <span>🤟 Vídeo 2</span>
+            <p>Tipos de radiação (UV, visível, IV)</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: Como a piscina aquece">
+            <span>🤟 Vídeo 3</span>
+            <p>Como a piscina aquece?</p>
+          </div>
+        </div>
+      </div>
+      <p class="note"><em>💡 Dica para o CEP: grave esses vídeos com um intérprete de Libras e incorpore usando a tag <code>&lt;video&gt;</code> com legendas.</em></p>
+    </section>
+
+    <!-- MAPA DO SITE -->
+    <section id="mapa" class="page" aria-labelledby="map-title">
+      <h2 id="map-title">🗺️ Mapa do Site</h2>
+      <p>Navegue rapidamente por todas as seções:</p>
+      <ul class="sitemap">
+        <li><a href="#home">🏠 Início</a></li>
+        <li><a href="#radiacao">🌞 Radiação Solar</a>
+          <ul>
+            <li><a href="#radiacao">O que é radiação eletromagnética</a></li>
+            <li><a href="#radiacao">Como chega à Terra</a></li>
+            <li><a href="#radiacao">Como aquece a água</a></li>
+          </ul>
+        </li>
+        <li><a href="#espectro">🌈 Tipos de Radiação</a>
+          <ul>
+            <li><a href="#espectro">Ultravioleta (UV)</a></li>
+            <li><a href="#espectro">Visível</a></li>
+            <li><a href="#espectro">Infravermelho (IV)</a></li>
+          </ul>
+        </li>
+        <li><a href="#simulador">🧪 Simulador interativo</a></li>
+        <li><a href="#robotica">🤖 Robótica e automação</a></li>
+        <li><a href="#acessibilidade">♿ Acessibilidade</a></li>
+        <li><a href="#mapa">🗺️ Mapa do site</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer" role="contentinfo">
+    <p>📚 Projeto Integrador — 3º Trimestre | <strong>CEP</strong></p>
+    <p>Tema: Radiação solar e aquecimento da piscina</p>
+    <p>Desenvolvido com HTML, CSS e JavaScript — 2026</p>
+  </footer>
+
+  <!-- VLibras (acessibilidade oficial do governo) -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
