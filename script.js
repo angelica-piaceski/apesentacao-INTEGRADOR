@@ -1,276 +1,301 @@
-/* =========================================================
-   SOL & ÁGUA — Interatividade
-   - Navegação SPA entre páginas
-   - Simulador de aquecimento (canvas)
-   - Acessibilidade (fonte, contraste, dislexia, régua)
-   ========================================================= */
-
+/* ============================================
+   NAVEGAÇÃO ENTRE SEÇÕES (SPA)
+   ============================================ */
 document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.section');
+  const menuLinks = document.querySelectorAll('[data-section]');
 
-  /* ---------- Navegação entre páginas ---------- */
-  const navLinks = document.querySelectorAll('.nav-link');
-  const pages = document.querySelectorAll('.page');
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navList = document.querySelector('.nav-list');
-
-  function showPage(pageId) {
-    pages.forEach(p => p.classList.toggle('active', p.id === pageId));
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === pageId));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (navList.classList.contains('open')) navList.classList.remove('open');
+  function showSection(id) {
+    sections.forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Atualiza menu ativo
+      document.querySelectorAll('.menu-list a').forEach(a => {
+        a.classList.toggle('active', a.dataset.section === id);
+      });
+    }
   }
 
-  navLinks.forEach(link => {
+  menuLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      showPage(link.dataset.page);
-      history.replaceState(null, '', '#' + link.dataset.page);
+      const id = link.dataset.section;
+      showSection(id);
+      history.pushState({ section: id }, '', '#' + id);
+      // Fecha menu mobile
+      document.getElementById('menu-principal').classList.remove('open');
+      document.getElementById('menu-toggle').setAttribute('aria-expanded', 'false');
     });
   });
 
-  // Carregar página a partir da URL
-  const hash = window.location.hash.replace('#', '');
-  if (hash && document.getElementById(hash)) showPage(hash);
+  // Suporte ao botão voltar/avançar
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.section) showSection(e.state.section);
+  });
+
+  // Carrega seção baseada no hash inicial
+  const initialHash = window.location.hash.replace('#', '');
+  if (initialHash && document.getElementById(initialHash)) {
+    showSection(initialHash);
+  }
 
   // Menu mobile
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuList = document.getElementById('menu-principal');
   menuToggle.addEventListener('click', () => {
-    const open = navList.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', open);
+    const isOpen = menuList.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
   });
 
-  /* ---------- Acessibilidade ---------- */
-  let fontScale = 1;
+  /* ============================================
+     FERRAMENTAS DE ACESSIBILIDADE
+     ============================================ */
   const body = document.body;
+  let fontSize = 16;
 
-  document.getElementById('btn-font-plus').addEventListener('click', () => {
-    fontScale = Math.min(fontScale + 0.1, 1.6);
-    document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
-  });
-  document.getElementById('btn-font-minus').addEventListener('click', () => {
-    fontScale = Math.max(fontScale - 0.1, 0.8);
-    document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
-  });
-  document.getElementById('btn-contrast').addEventListener('click', () => {
+  document.getElementById('btn-contrast').addEventListener('click', (e) => {
     body.classList.toggle('high-contrast');
-  });
-  document.getElementById('btn-dyslexia').addEventListener('click', () => {
-    body.classList.toggle('dyslexia');
+    e.target.setAttribute('aria-pressed', body.classList.contains('high-contrast'));
   });
 
-  // Régua de leitura
-  let guide = document.createElement('div');
-  guide.className = 'reading-guide';
-  document.body.appendChild(guide);
-  document.getElementById('btn-reading-guide').addEventListener('click', () => {
-    guide.classList.toggle('active');
-  });
-  document.addEventListener('mousemove', (e) => {
-    if (guide.classList.contains('active')) {
-      guide.style.top = (e.clientY - 20) + 'px';
+  document.getElementById('btn-font-up').addEventListener('click', () => {
+    if (fontSize < 24) {
+      fontSize += 2;
+      document.documentElement.style.fontSize = fontSize + 'px';
     }
   });
 
-  /* ---------- Simulador de Aquecimento ---------- */
-  const canvas = document.getElementById('sim-canvas');
-  const ctx = canvas.getContext('2d');
+  document.getElementById('btn-font-down').addEventListener('click', () => {
+    if (fontSize > 12) {
+      fontSize -= 2;
+      document.documentElement.style.fontSize = fontSize + 'px';
+    }
+  });
 
-  const sliders = {
-    intensidade: document.getElementById('intensidade'),
-    angulo: document.getElementById('angulo'),
-    volume: document.getElementById('volume'),
-    tempInicial: document.getElementById('temp-inicial'),
-    area: document.getElementById('area')
-  };
-  const labels = {
-    intensidade: document.getElementById('lbl-intensidade'),
-    angulo: document.getElementById('lbl-angulo'),
-    volume: document.getElementById('lbl-volume'),
-    tempInicial: document.getElementById('lbl-temp'),
-    area: document.getElementById('lbl-area')
-  };
-  const outTemp = document.getElementById('out-temp');
-  const outTempo = document.getElementById('out-tempo');
-  const outPot = document.getElementById('out-pot');
+  document.getElementById('btn-dyslexic').addEventListener('click', (e) => {
+    body.classList.toggle('dyslexic-font');
+    e.target.setAttribute('aria-pressed', body.classList.contains('dyslexic-font'));
+  });
 
-  let estado = {
-    temp: 20,
-    tempo: 0,       // em minutos
-    rodando: false,
-    intervalo: null
+  document.getElementById('btn-readable').addEventListener('click', (e) => {
+    body.classList.toggle('readable-mode');
+    e.target.setAttribute('aria-pressed', body.classList.contains('readable-mode'));
+  });
+
+  /* ============================================
+     ESPECTRO INTERATIVO
+     ============================================ */
+  const spectrumInfo = document.getElementById('spectrum-info');
+  const spectrumData = {
+    uv: {
+      title: '☢️ Ultravioleta (UV)',
+      text: 'Comprimento de onda: 100–400 nm. Alta energia. É parcialmente absorvida pela camada de ozônio. Atinge a superfície da piscina e pode degradar materiais plásticos e cloro da água. Representa cerca de 7% da energia solar que chega à Terra.'
+    },
+    vis: {
+      title: '🌈 Visível',
+      text: 'Comprimento de onda: 400–700 nm. Energia média. É a faixa que nossos olhos enxergam. Consegue penetrar alguns metros na água antes de ser totalmente absorvida. Representa cerca de 43% da energia solar que atinge a superfície.'
+    },
+    ir: {
+      title: '🔥 Infravermelho (IV)',
+      text: 'Comprimento de onda: 700 nm – 1 mm. Baixa energia por fóton, mas alta quantidade. É absorvido nos primeiros milímetros da água, aquecendo a superfície diretamente. Representa cerca de 49% da energia solar – o principal responsável pelo aquecimento da piscina!'
+    }
   };
 
-  // Atualizar labels dos sliders
-  Object.keys(sliders).forEach(key => {
-    sliders[key].addEventListener('input', () => {
-      const lblKey = key === 'tempInicial' ? 'tempInicial' : key;
-      labels[lblKey].textContent = sliders[key].value;
-      if (key === 'tempInicial' && !estado.rodando) {
-        estado.temp = parseFloat(sliders[key].value);
-        atualizarReadout();
-        desenhar();
+  document.querySelectorAll('.spectrum-band').forEach(band => {
+    const showInfo = () => {
+      const type = band.dataset.type;
+      const data = spectrumData[type];
+      spectrumInfo.innerHTML = `<h4>${data.title}</h4><p>${data.text}</p>`;
+    };
+    band.addEventListener('click', showInfo);
+    band.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showInfo();
       }
     });
   });
 
-  function calcularPotencia() {
-    const I = parseFloat(sliders.intensidade.value);      // W/m²
-    const ang = parseFloat(sliders.angulo.value) * Math.PI / 180;
-    const A = parseFloat(sliders.area.value);             // m²
-    const alpha = 0.7;                                     // absorvividade da água
-    return I * A * Math.cos(Math.PI/2 - ang) * alpha;     // cos do ângulo de incidência
-  }
+  /* ============================================
+     SIMULADOR DE AQUECIMENTO DA PISCINA
+     ============================================ */
+  const sliders = {
+    intensity: document.getElementById('slider-intensity'),
+    cover: document.getElementById('slider-cover'),
+    depth: document.getElementById('slider-depth'),
+    time: document.getElementById('slider-time'),
+    tempInit: document.getElementById('slider-temp-init')
+  };
+  const values = {
+    intensity: document.getElementById('val-intensity'),
+    cover: document.getElementById('val-cover'),
+    depth: document.getElementById('val-depth'),
+    time: document.getElementById('val-time'),
+    tempInit: document.getElementById('val-temp-init')
+  };
 
-  function passo() {
-    const P = calcularPotencia();                          // W (J/s)
-    const V = parseFloat(sliders.volume.value);            // m³
-    const m = V * 1000 * 1000;                             // g (1 m³ = 10⁶ g)
-    const c = 4.186;                                       // J/(g·°C)
+  // Parâmetros fixos da piscina (exemplo didático)
+  const AREA_PISCINA = 25; // m²
+  const VOLUME_PISCINA = 30; // m³ (30.000 L)
+  const MASSA_AGUA = VOLUME_PISCINA * 1000 * 1000; // gramas
+  const C_AGUA = 4.186; // J/(g·°C)
+  const EFICIENCIA_ABSORCAO = 0.7; // 70% da radiação é efetivamente absorvida
 
-    // Perdas por convecção/evaporação (aproximação): ~10 W/m² por °C acima de 20
-    const perda = Math.max(0, (estado.temp - 20)) * 10 * parseFloat(sliders.area.value);
-    const Pliq = P - perda;
+  function atualizarSimulador() {
+    const I = parseFloat(sliders.intensity.value);     // W/m²
+    const C = parseFloat(sliders.cover.value) / 100;   // fração coberta
+    const D = parseFloat(sliders.depth.value);         // m
+    const T = parseFloat(sliders.time.value);          // h
+    const Ti = parseFloat(sliders.tempInit.value);     // °C
 
-    const dt = 1;                                          // 1 minuto por passo
-    const deltaT = (Pliq * dt * 60) / (m * c);             // °C por minuto
+    // Atualiza labels
+    values.intensity.textContent = I;
+    values.cover.textContent = Math.round(C * 100);
+    values.depth.textContent = D.toFixed(1);
+    values.time.textContent = T;
+    values.tempInit.textContent = Ti;
 
-    estado.temp += deltaT;
-    estado.tempo += dt;
+    // Cálculos
+    const areaEfetiva = AREA_PISCINA * (1 - C); // área exposta ao sol
+    const potencia = I * areaEfetiva; // W
+    const energiaJ = potencia * T * 3600 * EFICIENCIA_ABSORCAO; // Joules
+    const energiaKJ = energiaJ / 1000;
 
-    // Limites físicos
-    if (estado.temp > 60) estado.temp = 60;
-    if (estado.temp < 5) estado.temp = 5;
+    // Massa real depende da profundidade (ajuste proporcional)
+    const massaReal = (D / 1.2) * MASSA_AGUA;
+    const deltaT = energiaJ / (massaReal * C_AGUA);
+    const Tf = Ti + deltaT;
 
-    atualizarReadout();
-    desenhar();
-  }
+    // Atualiza resultados
+    document.getElementById('result-temp').textContent = Tf.toFixed(1);
+    document.getElementById('result-delta').textContent = (deltaT >= 0 ? '+' : '') + deltaT.toFixed(1);
+    document.getElementById('result-energy').textContent = Math.round(energiaKJ).toLocaleString('pt-BR');
+    document.getElementById('pool-temp').textContent = Tf.toFixed(1) + ' °C';
 
-  function atualizarReadout() {
-    outTemp.textContent = estado.temp.toFixed(1);
-    outTempo.textContent = estado.tempo.toFixed(0);
-    outPot.textContent = calcularPotencia().toFixed(0);
-  }
+    // Cor da piscina baseada na temperatura
+    const poolWater = document.getElementById('pool-water');
+    const ratio = Math.min(Math.max((Tf - 15) / 25, 0), 1);
+    const r = Math.round(0 + ratio * 230);
+    const g = Math.round(180 - ratio * 100);
+    const b = Math.round(216 - ratio * 150);
+    poolWater.style.background = `linear-gradient(180deg, rgba(${r},${g},${b},0.7), rgba(${Math.max(r-50,0)},${Math.max(g-50,0)},${Math.max(b-50,0)},0.9))`;
 
-  /* ---------- Desenho do canvas ---------- */
-  function desenhar() {
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-
-    // Céu (gradiente conforme intensidade)
-    const intens = parseFloat(sliders.intensidade.value) / 1361;
-    const grad = ctx.createLinearGradient(0, 0, 0, H * 0.6);
-    grad.addColorStop(0, `rgba(255, ${180 + 75*intens}, 100, 1)`);
-    grad.addColorStop(1, `rgba(135, 206, 235, 1)`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H * 0.6);
-
-    // Sol
-    const raioSol = 30 + intens * 20;
-    const angSol = (90 - parseFloat(sliders.angulo.value)) * Math.PI / 180;
-    const solX = W * 0.15 + Math.cos(angSol) * W * 0.3;
-    const solY = 40 + Math.sin(angSol) * 80;
-    const solGrad = ctx.createRadialGradient(solX, solY, 5, solX, solY, raioSol);
-    solGrad.addColorStop(0, '#fff700');
-    solGrad.addColorStop(1, '#fb8500');
-    ctx.fillStyle = solGrad;
-    ctx.beginPath();
-    ctx.arc(solX, solY, raioSol, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Raios solares (setas até a piscina)
-    ctx.strokeStyle = 'rgba(255, 200, 0, 0.7)';
-    ctx.lineWidth = 2;
-    for (let i = 0; i < 5; i++) {
-      const x0 = solX + (i - 2) * 10;
-      const y0 = solY + raioSol;
-      const x1 = W * 0.3 + i * 60;
-      const y1 = H * 0.6;
-      ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.lineTo(x1, y1);
-      ctx.stroke();
+    // Explicação didática
+    let explanation = '';
+    if (deltaT < 1) {
+      explanation = '🌥️ Aquecimento pequeno. Tente aumentar a intensidade solar ou reduzir a cobertura.';
+    } else if (deltaT < 4) {
+      explanation = '☀️ Aquecimento moderado – típico de um dia ensolarado sem cobertura.';
+    } else if (deltaT < 7) {
+      explanation = '🔥 Aquecimento significativo! A piscina ficará bem agradável.';
+    } else {
+      explanation = '🌡️ Aquecimento intenso – atenção para não passar da temperatura ideal (28–30 °C).';
     }
-
-    // Piscina
-    const piscinaY = H * 0.6;
-    const piscinaH = H * 0.35;
-    const corAgua = temperaturaParaCor(estado.temp);
-    ctx.fillStyle = corAgua;
-    ctx.fillRect(0, piscinaY, W, piscinaH);
-
-    // Ondas
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.lineWidth = 2;
-    const t = Date.now() / 500;
-    for (let i = 0; i < 3; i++) {
-      ctx.beginPath();
-      for (let x = 0; x <= W; x += 5) {
-        const y = piscinaY + 10 + i * 15 + Math.sin(x / 30 + t + i) * 3;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
+    if (C > 0.5) {
+      explanation += ' A cobertura está reduzindo muito a área exposta ao sol.';
     }
-
-    // Termômetro lateral
-    const termX = W - 40, termY = piscinaY + 20, termH = piscinaH - 40;
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(termX - 8, termY, 16, termH);
-    ctx.strokeStyle = '#333';
-    ctx.strokeRect(termX - 8, termY, 16, termH);
-    const nivel = Math.min(1, Math.max(0, (estado.temp - 5) / 55));
-    ctx.fillStyle = '#e74c3c';
-    ctx.fillRect(termX - 6, termY + termH * (1 - nivel), 12, termH * nivel);
-
-    // Label da temperatura
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 16px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(estado.temp.toFixed(1) + '°C', W / 2, piscinaY + piscinaH / 2);
+    document.getElementById('result-explanation').textContent = explanation;
   }
 
-  function temperaturaParaCor(T) {
-    // De azul frio (5°C) a vermelho quente (60°C)
-    const t = Math.min(1, Math.max(0, (T - 5) / 55));
-    const r = Math.floor(30 + 225 * t);
-    const g = Math.floor(100 + 50 * (1 - Math.abs(t - 0.5) * 2));
-    const b = Math.floor(200 - 180 * t);
-    return `rgb(${r}, ${g}, ${b})`;
-  }
-
-  // Animação contínua das ondas
-  function animar() {
-    desenhar();
-    requestAnimationFrame(animar);
-  }
-  animar();
-
-  // Botões do simulador
-  document.getElementById('btn-play').addEventListener('click', () => {
-    if (estado.rodando) return;
-    estado.rodando = true;
-    estado.intervalo = setInterval(passo, 500);
+  // Eventos dos sliders
+  Object.values(sliders).forEach(slider => {
+    slider.addEventListener('input', atualizarSimulador);
   });
-  document.getElementById('btn-pause').addEventListener('click', () => {
-    estado.rodando = false;
-    clearInterval(estado.intervalo);
-  });
+
   document.getElementById('btn-reset').addEventListener('click', () => {
-    estado.rodando = false;
-    clearInterval(estado.intervalo);
-    estado.temp = parseFloat(sliders.tempInicial.value);
-    estado.tempo = 0;
-    atualizarReadout();
-    desenhar();
+    sliders.intensity.value = 800;
+    sliders.cover.value = 0;
+    sliders.depth.value = 1.2;
+    sliders.time.value = 6;
+    sliders.tempInit.value = 22;
+    atualizarSimulador();
   });
 
-  atualizarReadout();
-  desenhar();
+  // Inicializa simulador
+  atualizarSimulador();
 
-  /* ---------- Navegação por teclado (Enter/Esc) ---------- */
+  /* ============================================
+     ANIMAÇÃO: PROPAGAÇÃO SOL → TERRA
+     ============================================ */
+  const canvas = document.getElementById('canvas-propagation');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let frame = 0;
+
+    function drawPropagation() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Fundo espacial
+      const grad = ctx.createLinearGradient(0, 0, w, 0);
+      grad.addColorStop(0, '#03045e');
+      grad.addColorStop(0.5, '#0077b6');
+      grad.addColorStop(1, '#90e0ef');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Sol
+      ctx.fillStyle = '#ffd60a';
+      ctx.beginPath();
+      ctx.arc(60, h / 2, 40, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ff9e00';
+      ctx.beginPath();
+      ctx.arc(60, h / 2, 30, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Terra
+      ctx.fillStyle = '#06a77d';
+      ctx.beginPath();
+      ctx.arc(w - 60, h / 2, 35, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#0077b6';
+      ctx.beginPath();
+      ctx.arc(w - 70, h / 2 - 5, 15, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ondas eletromagnéticas
+      for (let i = 0; i < 8; i++) {
+        const x = 120 + ((frame + i * 30) % (w - 200));
+        const alpha = 0.3 + 0.5 * Math.sin((frame + i * 10) * 0.1);
+        ctx.strokeStyle = `rgba(255, 214, 10, ${alpha})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let y = 0; y < h; y += 2) {
+          const waveX = x + Math.sin((y + frame) * 0.1) * 10;
+          if (y === 0) ctx.moveTo(waveX, y);
+          else ctx.lineTo(waveX, y);
+        }
+        ctx.stroke();
+      }
+
+      // Rótulos
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 14px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SOL', 60, h - 15);
+      ctx.fillText('TERRA', w - 60, h - 15);
+      ctx.fillText('Radiação eletromagnética →', w / 2, 25);
+
+      frame++;
+      requestAnimationFrame(drawPropagation);
+    }
+    drawPropagation();
+  }
+
+  /* ============================================
+     NAVEGAÇÃO POR TECLADO (atalhos)
+     ============================================ */
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (navList.classList.contains('open')) navList.classList.remove('open');
+    // Alt + 1..8 navega entre seções
+    if (e.altKey && !isNaN(e.key) && e.key >= '1' && e.key <= '8') {
+      e.preventDefault();
+      const ids = ['home', 'sol', 'espectro', 'simulador', 'piscina', 'robotica', 'sustentabilidade', 'mapa'];
+      const target = ids[parseInt(e.key) - 1];
+      if (target) showSection(target);
     }
   });
-
 });
