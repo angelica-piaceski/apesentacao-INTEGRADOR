@@ -418,26 +418,6 @@ code {
   border-left: 4px solid var(--cor-agua);
 }
 
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
-}
-.video-placeholder {
-  background: linear-gradient(135deg, var(--cor-agua) 0%, var(--cor-agua-escura) 100%);
-  color: #fff;
-  padding: 40px 20px;
-  border-radius: var(--radius);
-  text-align: center;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-.video-placeholder span { font-size: 2.5em; }
 
 .note { font-size: 0.9em; color: #555; font-style: italic; }
 
