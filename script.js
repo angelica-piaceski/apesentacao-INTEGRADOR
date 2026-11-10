@@ -1,110 +1,269 @@
-// NAVEGAÇÃO
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById('menu').classList.add('hidden');
-  window.scrollTo(0, 0);
-}
+SOL & ÁGUA — Interatividade
+   - Navegação SPA
+   - Simulador 1: Aquecimento da piscina
+   - Simulador 2: Penetração da radiação (Beer-Lambert)
+   - Acessibilidade
+   SOL & ÁGUA — Interatividade (CORRIGIDO)
+   ========================================================= */
 
-function toggleMenu() {
-  document.getElementById('menu').classList.toggle('hidden');
-}
+document.addEventListener('DOMContentLoaded', () => {
+@@ -37,29 +33,68 @@ document.addEventListener('DOMContentLoaded', () => {
+    menuToggle.setAttribute('aria-expanded', open);
+  });
 
-// ACESSIBILIDADE
-let fontSize = 16;
-function changeFontSize(delta) {
-  fontSize = Math.max(12, Math.min(24, fontSize + delta));
-  document.documentElement.style.fontSize = fontSize + 'px';
-}
-function toggleContrast() { document.body.classList.toggle('contraste'); }
-function toggleDyslexia() { document.body.classList.toggle('dislexia'); }
-
-// ESPECTRO
-const specData = {
-  uv: "<strong>Ultravioleta (UV):</strong> 100-400 nm. Alta energia. Aquece a superfície e pode degradar o cloro.",
-  vis: "<strong>Visível:</strong> 400-700 nm. Penetra alguns metros na água e é convertida em calor.",
-  ir: "<strong>Infravermelho (IV):</strong> 700 nm - 1 mm. Principal responsável pelo aquecimento direto da superfície!"
-};
-function showSpectrum(type) {
-  document.getElementById('spec-info').innerHTML = specData[type];
-}
-
-// SIMULADOR
-function calc() {
-  const I = parseFloat(document.getElementById('s-int').value);
-  const C = parseFloat(document.getElementById('s-cov').value) / 100;
-  const D = parseFloat(document.getElementById('s-dep').value);
-  const T = parseFloat(document.getElementById('s-time').value);
-  const Ti = parseFloat(document.getElementById('s-temp').value);
-
-  document.getElementById('v-int').textContent = I;
-  document.getElementById('v-cov').textContent = Math.round(C * 100);
-  document.getElementById('v-dep').textContent = D.toFixed(1);
-  document.getElementById('v-time').textContent = T;
-  document.getElementById('v-temp').textContent = Ti;
-
-  const area = 25 * (1 - C);
-  const energiaJ = I * area * T * 3600 * 0.7;
-  const massa = (D / 1.2) * 30000000; // gramas (base 30m³)
-  const deltaT = energiaJ / (massa * 4.186);
-  const Tf = Ti + deltaT;
-
-  document.getElementById('r-temp').textContent = Tf.toFixed(1);
-  document.getElementById('r-delta').textContent = (deltaT >= 0 ? '+' : '') + deltaT.toFixed(1);
-  document.getElementById('r-energy').textContent = Math.round(energiaJ / 1000).toLocaleString('pt-BR');
-  document.getElementById('pool-temp').textContent = Tf.toFixed(1) + ' °C';
-
-  // Cor da água
-  const ratio = Math.min(Math.max((Tf - 15) / 25, 0), 1);
-  const r = Math.round(ratio * 230), g = Math.round(180 - ratio * 100), b = Math.round(216 - ratio * 150);
-  document.getElementById('pool-water').style.background = `linear-gradient(180deg, rgba(${r},${g},${b},0.8), rgba(${Math.max(r-50,0)},${Math.max(g-50,0)},${Math.max(b-50,0)},0.9))`;
-
-  let msg = "Ajuste os controles.";
-  if (deltaT < 1) msg = "🌥️ Aquecimento mínimo.";
-  else if (deltaT < 4) msg = "☀️ Aquecimento moderado e agradável.";
-  else if (deltaT < 7) msg = "🔥 Aquecimento significativo!";
-  else msg = "🌡️ Aquecimento intenso (cuidado > 30°C).";
-  if (C > 0.5) msg += " A cobertura está bloqueando muito o sol.";
-  document.getElementById('r-msg').textContent = msg;
-}
-
-function resetSim() {
-  document.getElementById('s-int').value = 800;
-  document.getElementById('s-cov').value = 0;
-  document.getElementById('s-dep').value = 1.2;
-  document.getElementById('s-time').value = 6;
-  document.getElementById('s-temp').value = 22;
-  calc();
-}
-
-// ANIMAÇÃO CANVAS
-const canvas = document.getElementById('canvas');
-if (canvas) {
-  const ctx = canvas.getContext('2d');
-  let frame = 0;
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Sol
-    ctx.fillStyle = '#ffd60a'; ctx.beginPath(); ctx.arc(50, 75, 30, 0, Math.PI*2); ctx.fill();
-    // Terra
-    ctx.fillStyle = '#06a77d'; ctx.beginPath(); ctx.arc(550, 75, 25, 0, Math.PI*2); ctx.fill();
-    // Ondas
-    for (let i = 0; i < 6; i++) {
-      let x = 100 + ((frame + i * 40) % 400);
-      ctx.strokeStyle = `rgba(255, 214, 10, ${0.4 + 0.4 * Math.sin((frame + i * 10) * 0.1)})`;
-      ctx.lineWidth = 2; ctx.beginPath();
-      for (let y = 0; y < 150; y += 2) {
-        let wx = x + Math.sin((y + frame) * 0.15) * 8;
-        y === 0 ? ctx.moveTo(wx, y) : ctx.lineTo(wx, y);
-      }
-      ctx.stroke();
-    }
-    ctx.fillStyle = 'white'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('SOL', 50, 140); ctx.fillText('TERRA', 550, 140);
-    frame++; requestAnimationFrame(draw);
+  /* ---------- Acessibilidade ---------- */
+  /* ---------- CORREÇÃO: Botão "Ir aos simuladores" ---------- */
+  const btnSimuladores = document.querySelector('.hero .btn-ghost');
+  if (btnSimuladores) {
+    btnSimuladores.addEventListener('click', (e) => {
+      e.preventDefault();
+      showPage('simulador');
+      history.replaceState(null, '', '#simulador');
+    });
   }
-  draw();
-}
 
-// Inicializa
-calc();
+  /* ---------- CORREÇÃO: Acessibilidade ---------- */
+  let fontScale = 1;
+  document.getElementById('btn-font-plus').addEventListener('click', () => {
+    fontScale = Math.min(fontScale + 0.1, 1.6);
+    document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
+  });
+  document.getElementById('btn-font-minus').addEventListener('click', () => {
+    fontScale = Math.max(fontScale - 0.1, 0.8);
+    document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
+  });
+  document.getElementById('btn-contrast').addEventListener('click', () => {
+    document.body.classList.toggle('high-contrast');
+  });
+  document.getElementById('btn-dyslexia').addEventListener('click', () => {
+    document.body.classList.toggle('dyslexia');
+  });
+  
+  const btnFontPlus = document.getElementById('btn-font-plus');
+  const btnFontMinus = document.getElementById('btn-font-minus');
+  const btnContrast = document.getElementById('btn-contrast');
+  const btnDyslexia = document.getElementById('btn-dyslexia');
+  const btnReadingGuide = document.getElementById('btn-reading-guide');
+
+  if (btnFontPlus) {
+    btnFontPlus.addEventListener('click', () => {
+      fontScale = Math.min(fontScale + 0.1, 1.6);
+      document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
+      console.log('Fonte aumentada:', fontScale);
+    });
+  }
+
+  if (btnFontMinus) {
+    btnFontMinus.addEventListener('click', () => {
+      fontScale = Math.max(fontScale - 0.1, 0.8);
+      document.documentElement.style.setProperty('--fonte-tamanho', (17 * fontScale) + 'px');
+      console.log('Fonte diminuída:', fontScale);
+    });
+  }
+
+  if (btnContrast) {
+    btnContrast.addEventListener('click', () => {
+      document.body.classList.toggle('high-contrast');
+      const isActive = document.body.classList.contains('high-contrast');
+      console.log('Alto contraste:', isActive ? 'ATIVADO' : 'DESATIVADO');
+    });
+  }
+
+  if (btnDyslexia) {
+    btnDyslexia.addEventListener('click', () => {
+      document.body.classList.toggle('dyslexia');
+      const isActive = document.body.classList.contains('dyslexia');
+      console.log('Fonte dislexia:', isActive ? 'ATIVADA' : 'DESATIVADA');
+    });
+  }
+
+  let guide = document.createElement('div');
+  guide.className = 'reading-guide';
+  document.body.appendChild(guide);
+  document.getElementById('btn-reading-guide').addEventListener('click', () => {
+    guide.classList.toggle('active');
+  });
+  
+  if (btnReadingGuide) {
+    btnReadingGuide.addEventListener('click', () => {
+      guide.classList.toggle('active');
+      console.log('Régua de leitura:', guide.classList.contains('active') ? 'ATIVA' : 'INATIVA');
+    });
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    if (guide.classList.contains('active')) {
+      guide.style.top = (e.clientY - 18) + 'px';
+@@ -115,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
+  function passo1() {
+    const P = calcPot1();
+    const V = parseFloat(s1.volume.value);
+    const m = V * 1e6; // g
+    const m = V * 1e6;
+    const c = 4.186;
+    const perda = Math.max(0, (estado1.temp - 20)) * 10 * parseFloat(s1.area.value);
+    const Pliq = P - perda;
+@@ -137,15 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
+    const W = canvas1.width, H = canvas1.height;
+    ctx1.clearRect(0, 0, W, H);
+
+    // Céu
+    const intens = parseFloat(s1.intensidade.value) / 1361;
+    const grad = ctx1.createLinearGradient(0, 0, 0, H * 0.6);
+    grad.addColorStop(0, `rgba(244, 228, 193, ${0.5 + 0.5*intens})`);
+    grad.addColorStop(1, `rgba(212, 196, 160, 1)`);
+    ctx1.fillStyle = grad;
+    ctx1.fillRect(0, 0, W, H * 0.6);
+
+    // Sol
+    const raioSol = 28 + intens * 18;
+    const angSol = (90 - parseFloat(s1.angulo.value)) * Math.PI / 180;
+    const solX = W * 0.15 + Math.cos(angSol) * W * 0.3;
+@@ -159,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
+    ctx1.arc(solX, solY, raioSol, 0, Math.PI * 2);
+    ctx1.fill();
+
+    // Raios
+    ctx1.strokeStyle = 'rgba(229, 142, 38, 0.5)';
+    ctx1.lineWidth = 1.5;
+    for (let i = 0; i < 6; i++) {
+@@ -173,13 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
+      ctx1.stroke();
+    }
+
+    // Piscina
+    const piscinaY = H * 0.6;
+    const piscinaH = H * 0.38;
+    ctx1.fillStyle = tempParaCor(estado1.temp);
+    ctx1.fillRect(0, piscinaY, W, piscinaH);
+
+    // Ondas
+    ctx1.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx1.lineWidth = 1.5;
+    const t = Date.now() / 600;
+@@ -193,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
+      ctx1.stroke();
+    }
+
+    // Termômetro
+    const termX = W - 36, termY = piscinaY + 18, termH = piscinaH - 36;
+    ctx1.fillStyle = '#fff';
+    ctx1.fillRect(termX - 6, termY, 12, termH);
+@@ -204,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
+    ctx1.fillStyle = '#c0392b';
+    ctx1.fillRect(termX - 4, termY + termH * (1 - nivel), 8, termH * nivel);
+
+    // Label
+    ctx1.fillStyle = '#fff';
+    ctx1.font = '600 15px Inter, sans-serif';
+    ctx1.textAlign = 'center';
+@@ -244,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
+  atualizar1();
+
+  /* ========================================================
+     SIMULADOR 2 — Penetração da radiação (Beer-Lambert)
+     SIMULADOR 2 — Penetração da radiação
+     ======================================================== */
+  const canvas2 = document.getElementById('sim2-canvas');
+  const ctx2 = canvas2.getContext('2d');
+@@ -268,8 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
+    total: document.getElementById('out-total')
+  };
+
+  // Coeficientes de absorção (1/m) — água limpa
+  // IR é absorvido em cm, UV em dezenas de cm, visível em metros
+  const muBase = { uv: 0.8, vis: 0.15, ir: 8.0 };
+
+  Object.keys(s2).forEach(key => {
+@@ -291,10 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
+      ir: muBase.ir * turb
+    };
+
+    // Profundidades em metros
+    const z1 = 0.1;   // 10 cm
+    const z2 = 0.5;   // 50 cm
+    const z3 = 2.0;   // 2 m
+    const z1 = 0.1;
+    const z2 = 0.5;
+    const z3 = 2.0;
+
+    const I_surf = (I_uv * (1 - Math.exp(-mu.uv * z1)) +
+                    I_vis * (1 - Math.exp(-mu.vis * z1)) +
+@@ -324,26 +349,22 @@ document.addEventListener('DOMContentLoaded', () => {
+    const W = canvas2.width, H = canvas2.height;
+    ctx2.clearRect(0, 0, W, H);
+
+    // Céu
+    const gradCeu = ctx2.createLinearGradient(0, 0, 0, H * 0.15);
+    gradCeu.addColorStop(0, '#f4e4c1');
+    gradCeu.addColorStop(1, '#d4c4a0');
+    ctx2.fillStyle = gradCeu;
+    ctx2.fillRect(0, 0, W, H * 0.15);
+
+    // Superfície da água
+    const supY = H * 0.15;
+    const aguaH = H * 0.85;
+
+    // Gradiente da água conforme absorção
+    const gradAgua = ctx2.createLinearGradient(0, supY, 0, H);
+    gradAgua.addColorStop(0, 'rgba(60, 99, 130, 0.55)');
+    gradAgua.addColorStop(0.3, 'rgba(40, 80, 110, 0.75)');
+    gradAgua.addColorStop(1, 'rgba(10, 40, 60, 0.95)');
+    ctx2.fillStyle = gradAgua;
+    ctx2.fillRect(0, supY, W, aguaH);
+
+    // Escala de profundidade (lateral)
+    ctx2.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx2.font = '500 11px Inter, sans-serif';
+    ctx2.textAlign = 'left';
+@@ -358,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
+      ctx2.stroke();
+    });
+
+    // Desenhar feixes de cada faixa
+    const faixas = [
+      { nome: 'UV', cor: 'rgba(142, 68, 173, ', I: I.uv, mu: mu.uv },
+      { nome: 'Vis', cor: 'rgba(46, 204, 113, ', I: I.vis, mu: mu.vis },
+@@ -373,7 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
+      const maxI = Math.max(I.uv, I.vis, I.ir, 1);
+      const intensRel = fx.I / maxI;
+
+      // Label no topo
+      ctx2.fillStyle = fx.cor + '0.95)';
+      ctx2.font = '600 13px Inter, sans-serif';
+      ctx2.textAlign = 'center';
+@@ -382,7 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
+      ctx2.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx2.fillText(fx.I + ' W/m²', x + larguraFaixa/2, supY - 22);
+
+      // Desenhar a atenuação como barra vertical com gradiente
+      const passos = 40;
+      for (let i = 0; i < passos; i++) {
+        const z1 = (i / passos) * 3;
+@@ -399,13 +417,11 @@ document.addEventListener('DOMContentLoaded', () => {
+        ctx2.fillRect(x, y1, larguraFaixa, y2 - y1);
+      }
+
+      // Borda
+      ctx2.strokeStyle = fx.cor + '0.6)';
+      ctx2.lineWidth = 1;
+      ctx2.strokeRect(x, supY, larguraFaixa, aguaH);
+    });
+
+    // Legenda inferior
+    ctx2.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx2.font = '500 11px Inter, sans-serif';
+    ctx2.textAlign = 'left';
+@@ -429,4 +445,12 @@ document.addEventListener('DOMContentLoaded', () => {
+    }
+  });
+
+  /* ---------- Debug: verificar se botões existem ---------- */
+  console.log('Botões de acessibilidade encontrados:');
+  console.log('- Contraste:', !!btnContrast);
+  console.log('- Dislexia:', !!btnDyslexia);
+  console.log('- Fonte +:', !!btnFontPlus);
+  console.log('- Fonte -:', !!btnFontMinus);
+  console.log('- Régua:', !!btnReadingGuide);
+
+});
