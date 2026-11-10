@@ -1291,6 +1291,34 @@ footer {
 .robotics-card,
 .impact-card {
     animation: fadeInUp 0.6s ease-out backwards;
+
+
+    /* Botão VLibras personalizado */
+.vlibras-button {
+    position: fixed;
+    bottom: 100px;
+    left: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1E90FF, #0066CC);
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(30, 144, 255, 0.4);
+    z-index: 998;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.vlibras-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(30, 144, 255, 0.6);
+}
+    
 }
 
 .info-card:nth-child(1) { animation-delay: 0.1s; }
