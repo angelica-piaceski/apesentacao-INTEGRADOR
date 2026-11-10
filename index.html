@@ -6,6 +6,9 @@
     <meta name="description" content="Site educacional sobre radiação solar e aquecimento de piscina - Projeto Integrador 3TRI">
     <title>Sol + Água | Física da Radiação Solar</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -20,7 +23,7 @@
     <!-- Painel de Acessibilidade -->
     <div id="accessibility-panel" class="accessibility-panel" role="dialog" aria-labelledby="accessibility-title" aria-hidden="true">
         <div class="panel-header">
-            <h2 id="accessibility-title">Configurações de Acessibilidade</h2>
+            <h2 id="accessibility-title">Acessibilidade</h2>
             <button class="close-panel" aria-label="Fechar painel">&times;</button>
         </div>
         
@@ -28,28 +31,28 @@
             <div class="accessibility-option">
                 <label>
                     <input type="checkbox" id="high-contrast">
-                    <span>Alto Contraste</span>
+                    <span>🌓 Alto Contraste</span>
                 </label>
             </div>
             
             <div class="accessibility-option">
                 <label>
                     <input type="checkbox" id="dyslexia-font">
-                    <span>Fonte para Dislexia</span>
+                    <span>🔤 Fonte para Dislexia</span>
                 </label>
             </div>
             
             <div class="accessibility-option">
                 <label>
                     <input type="checkbox" id="increase-spacing">
-                    <span>Aumentar Espaçamento</span>
+                    <span>📏 Aumentar Espaçamento</span>
                 </label>
             </div>
             
             <div class="accessibility-option">
                 <label>
-                    <input type="range" id="font-size" min="100" max="150" value="100" step="5">
-                    <span>Tamanho da Fonte: <span id="font-size-value">100%</span></span>
+                    <input type="range" id="font-size" min="100" max="170" value="100" step="10">
+                    <span>🔍 Fonte: <span id="font-size-value">100%</span></span>
                 </label>
             </div>
         </div>
@@ -69,7 +72,7 @@
             </button>
             <ul id="nav-menu" class="nav-menu">
                 <li><a href="#inicio">Início</a></li>
-                <li><a href="#radiacao">Radiação Solar</a></li>
+                <li><a href="#radiacao">Radiação</a></li>
                 <li><a href="#espectro">Espectro</a></li>
                 <li><a href="#simulador">Simulador</a></li>
                 <li><a href="#robotica">Robótica</a></li>
@@ -79,48 +82,58 @@
     </header>
 
     <main id="main-content" role="main">
-        <!-- Seção Hero -->
+        <!-- Hero Section -->
         <section id="inicio" class="hero" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <h1 id="hero-title">A Física do Aquecimento Solar</h1>
-                <p class="hero-subtitle">Descubra como a energia do Sol aquece a água da sua piscina</p>
-                <a href="#radiacao" class="cta-button">Começar a Explorar</a>
+            <div class="hero-bg">
+                <div class="sun-hero"></div>
+                <div class="rays"></div>
+                <div class="water-hero"></div>
             </div>
-            <div class="hero-visual" aria-hidden="true">
-                <div class="sun"></div>
-                <div class="water"></div>
+            <div class="hero-content">
+                <span class="hero-badge">🎓 Projeto Integrador 3TRI</span>
+                <h1 id="hero-title">A Física do <span class="highlight">Aquecimento Solar</span></h1>
+                <p class="hero-subtitle">Descubra como a energia do Sol aquece a água da sua piscina através da radiação eletromagnética</p>
+                <div class="hero-buttons">
+                    <a href="#simulador" class="cta-button primary">🚀 Experimentar Simulador</a>
+                    <a href="#radiacao" class="cta-button secondary">📚 Aprender Física</a>
+                </div>
             </div>
         </section>
 
         <!-- Seção Radiação Solar -->
         <section id="radiacao" class="content-section" aria-labelledby="radiacao-title">
             <div class="container">
-                <h2 id="radiacao-title">Como a Radiação Solar Chega até Nós?</h2>
+                <div class="section-header">
+                    <span class="section-tag">Física</span>
+                    <h2 id="radiacao-title">Como a Radiação Solar Chega até Nós?</h2>
+                    <p class="section-intro">Uma jornada de 150 milhões de quilômetros em apenas 8 minutos</p>
+                </div>
                 
-                <div class="info-card">
-                    <div class="card-icon" aria-hidden="true">🌌</div>
-                    <h3>Propagação no Vácuo</h3>
-                    <p>A radiação solar viaja pelo espaço na forma de <strong>ondas eletromagnéticas</strong>, não precisando de um meio material para se propagar. Ela viaja à velocidade da luz: <strong>300.000 km/s</strong>.</p>
-                    <div class="formula" role="math" aria-label="Velocidade da luz">
-                        c = 3 × 10⁸ m/s
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-icon">🌌</div>
+                        <h3>Propagação no Vácuo</h3>
+                        <p>A radiação solar viaja pelo espaço na forma de <strong>ondas eletromagnéticas</strong>, sem precisar de meio material. Velocidade: <strong>300.000 km/s</strong>.</p>
+                        <div class="formula">c = 3 × 10⁸ m/s</div>
                     </div>
-                </div>
 
-                <div class="info-card">
-                    <div class="card-icon" aria-hidden="true">🌍</div>
-                    <h3>Chegando na Terra</h3>
-                    <p>Ao atingir a atmosfera terrestre, parte da radiação é:</p>
-                    <ul>
-                        <li><strong>Refletida</strong> por nuvens e partículas</li>
-                        <li><strong>Absorvida</strong> pela camada de ozônio (UV)</li>
-                        <li><strong>Transmitida</strong> até a superfície (visível e infravermelho)</li>
-                    </ul>
-                </div>
+                    <div class="info-card">
+                        <div class="card-icon">🌍</div>
+                        <h3>Chegando na Terra</h3>
+                        <p>Ao atingir a atmosfera, parte da radiação é:</p>
+                        <ul>
+                            <li><strong>Refletida</strong> por nuvens</li>
+                            <li><strong>Absorvida</strong> pelo ozônio (UV)</li>
+                            <li><strong>Transmitida</strong> à superfície</li>
+                        </ul>
+                    </div>
 
-                <div class="info-card">
-                    <div class="card-icon" aria-hidden="true">💧</div>
-                    <h3>Transferência de Energia</h3>
-                    <p>Quando os fótons atingem a água, eles são absorvidos pelas moléculas de H₂O, aumentando sua <strong>energia cinética</strong> (agitação molecular). Isso se manifesta macroscopicamente como <strong>aumento de temperatura</strong>.</p>
+                    <div class="info-card">
+                        <div class="card-icon">💧</div>
+                        <h3>Transferência de Energia</h3>
+                        <p>Fótons são absorvidos pelas moléculas de H₂O, aumentando sua <strong>energia cinética</strong> (agitação molecular). Macroscopicamente: <strong>aumento de temperatura</strong>.</p>
+                        <div class="formula">E = h · f</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -128,45 +141,45 @@
         <!-- Seção Espectro -->
         <section id="espectro" class="content-section spectrum-section" aria-labelledby="espectro-title">
             <div class="container">
-                <h2 id="espectro-title">O Espectro Eletromagnético</h2>
-                <p class="section-intro">A luz solar é composta por diferentes tipos de radiação, cada uma com características únicas:</p>
+                <div class="section-header">
+                    <span class="section-tag">Espectro</span>
+                    <h2 id="espectro-title">O Espectro Eletromagnético</h2>
+                    <p class="section-intro">A luz solar é composta por diferentes tipos de radiação</p>
+                </div>
                 
                 <div class="spectrum-grid">
                     <div class="spectrum-card uv-card">
-                        <div class="spectrum-icon" aria-hidden="true">🔮</div>
+                        <div class="spectrum-icon">🔮</div>
                         <h3>Ultravioleta (UV)</h3>
-                        <ul>
-                            <li><strong>Comprimento de onda:</strong> 10-400 nm</li>
-                            <li><strong>Energia:</strong> Alta</li>
-                            <li><strong>Efeito:</strong> Causa reações químicas (bronzeamento)</li>
-                            <li><strong>Aquecimento:</strong> Baixo</li>
-                        </ul>
+                        <div class="spectrum-data">
+                            <span><strong>λ:</strong> 10-400 nm</span>
+                            <span><strong>Energia:</strong> Alta</span>
+                        </div>
+                        <p>Causa reações químicas (bronzeamento). Baixo aquecimento.</p>
                     </div>
 
                     <div class="spectrum-card visible-card">
-                        <div class="spectrum-icon" aria-hidden="true">🌈</div>
+                        <div class="spectrum-icon">🌈</div>
                         <h3>Luz Visível</h3>
-                        <ul>
-                            <li><strong>Comprimento de onda:</strong> 400-700 nm</li>
-                            <li><strong>Energia:</strong> Média</li>
-                            <li><strong>Efeito:</strong> Ilumina e permite visão</li>
-                            <li><strong>Aquecimento:</strong> Moderado</li>
-                        </ul>
+                        <div class="spectrum-data">
+                            <span><strong>λ:</strong> 400-700 nm</span>
+                            <span><strong>Energia:</strong> Média</span>
+                        </div>
+                        <p>Ilumina e permite visão. Aquecimento moderado.</p>
                     </div>
 
                     <div class="spectrum-card infrared-card">
-                        <div class="spectrum-icon" aria-hidden="true">🔥</div>
+                        <div class="spectrum-icon">🔥</div>
                         <h3>Infravermelho (IV)</h3>
-                        <ul>
-                            <li><strong>Comprimento de onda:</strong> 700 nm - 1 mm</li>
-                            <li><strong>Energia:</strong> Baixa</li>
-                            <li><strong>Efeito:</strong> Radiação térmica</li>
-                            <li><strong>Aquecimento:</strong> Alto (principal responsável)</li>
-                        </ul>
+                        <div class="spectrum-data">
+                            <span><strong>λ:</strong> 700nm-1mm</span>
+                            <span><strong>Energia:</strong> Baixa</span>
+                        </div>
+                        <p>Radiação térmica. <strong>Principal responsável pelo aquecimento.</strong></p>
                     </div>
                 </div>
 
-                <div class="spectrum-visual" aria-label="Representação visual do espectro eletromagnético">
+                <div class="spectrum-visual">
                     <div class="spectrum-bar">
                         <div class="spectrum-segment uv"></div>
                         <div class="spectrum-segment visible"></div>
@@ -184,42 +197,58 @@
         <!-- Seção Simulador -->
         <section id="simulador" class="content-section simulator-section" aria-labelledby="simulador-title">
             <div class="container">
-                <h2 id="simulador-title">Simulador Interativo</h2>
-                <p class="section-intro">Experimente como a radiação solar aquece a água da piscina</p>
+                <div class="section-header">
+                    <span class="section-tag">Interativo</span>
+                    <h2 id="simulador-title">Simulador de Aquecimento</h2>
+                    <p class="section-intro">Experimente como diferentes tipos de radiação aquecem a água</p>
+                </div>
                 
                 <div class="simulator-container">
-                    <div class="simulator-visual">
-                        <div class="sun-simulator" id="sun-simulator">
-                            <div class="sun-rays"></div>
-                        </div>
-                        <div class="pool-simulator">
-                            <div class="water-molecules" id="water-molecules"></div>
-                            <div class="thermometer">
-                                <div class="thermometer-fill" id="thermometer-fill"></div>
-                                <span class="temperature-display" id="temperature-display">25°C</span>
+                    <div class="simulator-canvas-wrapper">
+                        <canvas id="simulator-canvas" width="800" height="500" aria-label="Simulação interativa de radiação solar aquecendo uma piscina"></canvas>
+                        <div class="simulator-overlay">
+                            <div class="temp-display">
+                                <span class="temp-label">Temperatura</span>
+                                <span class="temp-value" id="temperature-display">25.0°C</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="simulator-controls">
                         <div class="control-group">
-                            <label for="sun-intensity">Intensidade do Sol:</label>
-                            <input type="range" id="sun-intensity" min="0" max="100" value="50">
-                            <span id="intensity-value">50%</span>
+                            <label for="sun-intensity">☀️ Intensidade do Sol</label>
+                            <div class="range-wrapper">
+                                <input type="range" id="sun-intensity" min="0" max="100" value="50">
+                                <span class="range-value" id="intensity-value">50%</span>
+                            </div>
                         </div>
                         
                         <div class="control-group">
-                            <label for="radiation-type">Tipo de Radiação:</label>
-                            <select id="radiation-type">
-                                <option value="uv">Ultravioleta</option>
-                                <option value="visible" selected>Visível</option>
-                                <option value="infrared">Infravermelho</option>
-                                <option value="all">Todas</option>
-                            </select>
+                            <label for="radiation-type">🌈 Tipo de Radiação</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="radiation" value="uv">
+                                    <span class="radio-custom uv">UV</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="radiation" value="visible" checked>
+                                    <span class="radio-custom visible">Visível</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="radiation" value="infrared">
+                                    <span class="radio-custom infrared">IV</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="radiation" value="all">
+                                    <span class="radio-custom all">Todas</span>
+                                </label>
+                            </div>
                         </div>
                         
-                        <button id="start-simulation" class="simulator-button">Iniciar Simulação</button>
-                        <button id="reset-simulation" class="simulator-button secondary">Resetar</button>
+                        <div class="simulator-buttons">
+                            <button id="start-simulation" class="simulator-button primary">▶ Iniciar</button>
+                            <button id="reset-simulation" class="simulator-button secondary">↺ Resetar</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -228,63 +257,66 @@
         <!-- Seção Robótica -->
         <section id="robotica" class="content-section robotics-section" aria-labelledby="robotica-title">
             <div class="container">
-                <h2 id="robotica-title">Automação e Robótica</h2>
-                <p class="section-intro">Como a tecnologia pode otimizar o aquecimento solar</p>
+                <div class="section-header">
+                    <span class="section-tag">Robótica</span>
+                    <h2 id="robotica-title">Automação Inteligente</h2>
+                    <p class="section-intro">Tecnologia para otimizar o aquecimento solar</p>
+                </div>
                 
                 <div class="robotics-grid">
                     <div class="robotics-card">
-                        <div class="robotics-icon" aria-hidden="true">🤖</div>
+                        <div class="robotics-icon">🤖</div>
                         <h3>Capa Térmica Automatizada</h3>
-                        <p>Um sistema com Arduino e sensores que abre a capa térmica durante o dia para captar calor e fecha à noite para reter a temperatura.</p>
+                        <p>Abre durante o dia para captar calor e fecha à noite para reter temperatura.</p>
                         <div class="tech-stack">
                             <span class="tech-badge">Arduino</span>
-                            <span class="tech-badge">Sensor LDR</span>
-                            <span class="tech-badge">Sensor de Temperatura</span>
+                            <span class="tech-badge">LDR</span>
+                            <span class="tech-badge">DS18B20</span>
                             <span class="tech-badge">Motor DC</span>
                         </div>
                     </div>
 
                     <div class="robotics-card">
-                        <div class="robotics-icon" aria-hidden="true">☀️</div>
+                        <div class="robotics-icon">☀️</div>
                         <h3>Rastreador Solar</h3>
-                        <p>Espelhos motorizados que seguem a posição do sol para refletir mais radiação infravermelha para a piscina, aumentando a eficiência.</p>
+                        <p>Espelhos motorizados seguem o sol para refletir mais radiação infravermelha.</p>
                         <div class="tech-stack">
                             <span class="tech-badge">ESP32</span>
-                            <span class="tech-badge">Sensores LDR</span>
-                            <span class="tech-badge">Servo Motores</span>
+                            <span class="tech-badge">LDRs</span>
+                            <span class="tech-badge">Servos</span>
                             <span class="tech-badge">Espelhos</span>
                         </div>
                     </div>
 
                     <div class="robotics-card">
-                        <div class="robotics-icon" aria-hidden="true">📊</div>
-                        <h3>Monitoramento Inteligente</h3>
-                        <p>Sistema que monitora temperatura, pH e nível da água, enviando dados para um aplicativo em tempo real.</p>
+                        <div class="robotics-icon">📊</div>
+                        <h3>Monitoramento IoT</h3>
+                        <p>Monitora temperatura, pH e nível, enviando dados em tempo real.</p>
                         <div class="tech-stack">
                             <span class="tech-badge">WiFi</span>
                             <span class="tech-badge">Sensores</span>
-                            <span class="tech-badge">App Mobile</span>
+                            <span class="tech-badge">App</span>
                             <span class="tech-badge">IoT</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="robotics-diagram">
-                    <h3>Como Funciona o Sistema Automatizado</h3>
-                    <div class="flow-diagram">
+                <div class="flow-diagram">
+                    <h3>Como Funciona o Sistema</h3>
+                    <div class="flow-steps">
                         <div class="flow-step">
                             <div class="step-icon">🌅</div>
-                            <p>Sensor detecta luz solar</p>
+                            <p>Sensor detecta luz</p>
                         </div>
                         <div class="flow-arrow">→</div>
                         <div class="flow-step">
                             <div class="step-icon">⚙️</div>
-                            <p>Arduino processa dados</p>
+                            <p>Arduino processa</p>
                         </div>
                         <div class="flow-arrow">→</div>
                         <div class="flow-step">
                             <div class="step-icon">🔄</div>
-                            <p>Motor abre capa térmica</p>
+                            <p>Motor abre capa</p>
                         </div>
                         <div class="flow-arrow">→</div>
                         <div class="flow-step">
@@ -299,40 +331,51 @@
         <!-- Seção Impacto -->
         <section id="impacto" class="content-section impact-section" aria-labelledby="impacto-title">
             <div class="container">
-                <h2 id="impacto-title">Impacto Social e Sustentabilidade</h2>
-                <p class="section-intro">Como o aquecimento solar contribui para um futuro mais sustentável</p>
+                <div class="section-header">
+                    <span class="section-tag">Sustentabilidade</span>
+                    <h2 id="impacto-title">Impacto Social e Ambiental</h2>
+                    <p class="section-intro">Energia limpa para um futuro sustentável</p>
+                </div>
                 
                 <div class="impact-grid">
-                    <div class="impact-card">
-                        <div class="impact-icon" aria-hidden="true">💰</div>
-                        <h3>Economia Financeira</h3>
+                    <div class="impact-card calculator-card">
+                        <div class="impact-icon">💰</div>
+                        <h3>Calculadora de Economia</h3>
                         <div class="calculator">
                             <label for="pool-size">Tamanho da Piscina (m³):</label>
                             <input type="number" id="pool-size" min="1" max="100" value="20">
                             
-                            <label for="heating-method">Método de Aquecimento:</label>
+                            <label for="heating-method">Método Atual:</label>
                             <select id="heating-method">
                                 <option value="electric">Elétrico</option>
                                 <option value="gas">Gás</option>
-                                <option value="solar" selected>Solar</option>
                             </select>
                             
                             <button id="calculate-savings" class="calculator-button">Calcular Economia</button>
                             
                             <div class="savings-result" id="savings-result" aria-live="polite">
-                                <p>Economia mensal: <strong id="monthly-savings">R$ 0,00</strong></p>
-                                <p>Economia anual: <strong id="yearly-savings">R$ 0,00</strong></p>
-                                <p>CO₂ evitado: <strong id="co2-saved">0 kg</strong></p>
+                                <div class="saving-item">
+                                    <span class="saving-label">Mensal</span>
+                                    <span class="saving-value" id="monthly-savings">R$ 0,00</span>
+                                </div>
+                                <div class="saving-item">
+                                    <span class="saving-label">Anual</span>
+                                    <span class="saving-value" id="yearly-savings">R$ 0,00</span>
+                                </div>
+                                <div class="saving-item">
+                                    <span class="saving-label">CO₂ evitado/ano</span>
+                                    <span class="saving-value" id="co2-saved">0 kg</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="impact-card">
-                        <div class="impact-icon" aria-hidden="true">🌱</div>
+                        <div class="impact-icon">🌱</div>
                         <h3>Benefícios Ambientais</h3>
                         <ul class="benefits-list">
-                            <li>Redução de até 80% no consumo de energia elétrica</li>
-                            <li>Diminuição da emissão de gases de efeito estufa</li>
+                            <li>Redução de até 80% no consumo elétrico</li>
+                            <li>Menos emissão de gases de efeito estufa</li>
                             <li>Menor dependência de termelétricas</li>
                             <li>Energia renovável e inesgotável</li>
                             <li>Redução da pegada de carbono</li>
@@ -340,16 +383,16 @@
                     </div>
 
                     <div class="impact-card">
-                        <div class="impact-icon" aria-hidden="true">🏘️</div>
+                        <div class="impact-icon">🏘️</div>
                         <h3>Inclusão Social</h3>
-                        <p>O aquecimento solar pode ser aplicado em:</p>
+                        <p>Aplicável em:</p>
                         <ul>
                             <li>Comunidades carentes</li>
                             <li>Escolas públicas</li>
                             <li>Hospitais e centros de saúde</li>
                             <li>Projetos sociais</li>
                         </ul>
-                        <p><strong>Reduzindo a conta de luz e melhorando a qualidade de vida.</strong></p>
+                        <p class="highlight-text"><strong>Reduzindo contas e melhorando vidas.</strong></p>
                     </div>
                 </div>
             </div>
@@ -361,22 +404,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Sol + Água</h3>
+                    <div class="logo">
+                        <span class="logo-icon">☀️💧</span>
+                        <span class="logo-text">Sol + Água</span>
+                    </div>
                     <p>Projeto Integrador 3TRI - Física da Radiação Solar</p>
                 </div>
                 <div class="footer-section">
                     <h3>Navegação</h3>
                     <ul>
                         <li><a href="#inicio">Início</a></li>
-                        <li><a href="#radiacao">Radiação Solar</a></li>
-                        <li><a href="#espectro">Espectro</a></li>
+                        <li><a href="#radiacao">Radiação</a></li>
                         <li><a href="#simulador">Simulador</a></li>
+                        <li><a href="#impacto">Impacto</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Acessibilidade</h3>
-                    <p>Este site foi desenvolvido com foco em acessibilidade e inclusão digital.</p>
-                    <button id="open-accessibility-footer" class="footer-button">Configurações de Acessibilidade</button>
+                    <p>Site desenvolvido com foco em inclusão digital.</p>
+                    <button id="open-accessibility-footer" class="footer-button">⚙️ Configurações</button>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -384,6 +430,18 @@
             </div>
         </div>
     </footer>
+
+    <!-- VLibras - Widget Oficial do Governo -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 
     <script src="script.js"></script>
 </body>
