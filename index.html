@@ -6,7 +6,6 @@
   <meta name="description" content="Site educacional sobre radiação solar e aquecimento de piscina — Projeto Integrador CEP." />
   <title>Sol & Água — Radiação Solar e Aquecimento de Piscina</title>
 
-  <!-- Fonte para dislexia -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
@@ -15,7 +14,6 @@
 </head>
 <body>
 
-  <!-- Pular para o conteúdo principal (acessibilidade) -->
   <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
 
   <!-- Barra de Acessibilidade -->
@@ -283,7 +281,6 @@ FIM</pre>
 
       <ul class="features-list">
         <li>✅ <strong>VLibras</strong> integrado: tradução automática de textos para Libras.</li>
-        <li>✅ <strong>Vídeos em Libras</strong> explicando os conceitos principais.</li>
         <li>✅ <strong>Navegação completa por teclado</strong> (Tab, Enter, Esc).</li>
         <li>✅ <strong>Alto contraste</strong> para pessoas com baixa visão.</li>
         <li>✅ <strong>Fonte para dislexia</strong> (Atkinson Hyperlegible).</li>
@@ -294,28 +291,13 @@ FIM</pre>
         <li>✅ <strong>ARIA labels</strong> em todos os controles interativos.</li>
       </ul>
 
-      <h3>🎬 Vídeos em Libras</h3>
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: O que é radiação solar">
-            <span>🤟 Vídeo 1</span>
-            <p>O que é radiação solar?</p>
-          </div>
-        </div>
-        <div class="video-card">
-          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: Tipos de radiação">
-            <span>🤟 Vídeo 2</span>
-            <p>Tipos de radiação (UV, visível, IV)</p>
-          </div>
-        </div>
-        <div class="video-card">
-          <div class="video-placeholder" role="img" aria-label="Vídeo em Libras: Como a piscina aquece">
-            <span>🤟 Vídeo 3</span>
-            <p>Como a piscina aquece?</p>
-          </div>
-        </div>
+      <h3>🤟 VLibras — Tradução para Libras</h3>
+      <p>O site conta com o <strong>widget oficial do VLibras</strong> (do governo federal) integrado no canto inferior direito. Basta clicar no ícone 🤟 e digitar ou selecionar qualquer trecho do site para receber a tradução em Língua Brasileira de Sinais por um avatar virtual.</p>
+
+      <div class="info-card">
+        <h4>💡 Dica de uso</h4>
+        <p>Selecione um parágrafo, clique no botão do VLibras e escolha "Traduzir seleção". O avatar fará os sinais em tempo real — excelente recurso para visitantes surdos ou estudantes de Libras!</p>
       </div>
-      <p class="note"><em>💡 Dica para o CEP: grave esses vídeos com um intérprete de Libras e incorpore usando a tag <code>&lt;video&gt;</code> com legendas.</em></p>
     </section>
 
     <!-- MAPA DO SITE -->
@@ -354,7 +336,7 @@ FIM</pre>
     <p>Desenvolvido com HTML, CSS e JavaScript — 2026</p>
   </footer>
 
-  <!-- VLibras (acessibilidade oficial do governo) -->
+  <!-- VLibras -->
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
@@ -365,6 +347,10 @@ FIM</pre>
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
   <script src="script.js"></script>
 </body>
